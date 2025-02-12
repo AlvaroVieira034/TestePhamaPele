@@ -136,8 +136,6 @@ procedure TFrmCadCliente.FormShow(Sender: TObject);
 begin
   inherited;
   PreencherGridClientes();
-  DsClientes := FClienteController.GetDataSource();
-
   DbGridClientes.Columns[0].Width := 50;
   DbGridClientes.Columns[1].Width := 270;
   DbGridClientes.Columns[2].Width := 70;
@@ -147,7 +145,6 @@ begin
   DbGridClientes.Columns[6].Width := 45;
   DbGridClientes.Columns[7].Width := 100;
   DbGridClientes.Columns[8].Width := 200;
-
   VerificaBotoes(FOperacao);
   if EdtPesquisar.CanFocus then
     EdtPesquisar.SetFocus;
@@ -471,10 +468,6 @@ begin
     Key := 0;
   end;
 end;
-
-
-
-
 
 procedure TFrmCadCliente.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin

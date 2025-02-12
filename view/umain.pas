@@ -15,6 +15,7 @@ type
     BtnClientes: TSpeedButton;
     procedure BtnClientesClick(Sender: TObject);
     procedure BtnSairClick(Sender: TObject);
+    procedure BtnProdutosClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -28,7 +29,7 @@ implementation
 
 {$R *.dfm}
 
-uses ucadcliente;
+uses ucadcliente, ucadproduto;
 
 procedure TFrmMain.BtnClientesClick(Sender: TObject);
 begin
@@ -38,6 +39,16 @@ begin
   FrmCadCliente.ShowModal;
   FrmCadCliente.Free;
   FrmCadCliente := nil;
+end;
+
+procedure TFrmMain.BtnProdutosClick(Sender: TObject);
+begin
+  if not Assigned(FrmCadProduto) then
+    FrmCadProduto := TFrmCadProduto.Create(Self);
+
+  FrmCadProduto.ShowModal;
+  FrmCadProduto.Free;
+  FrmCadProduto := nil;
 end;
 
 procedure TFrmMain.BtnSairClick(Sender: TObject);

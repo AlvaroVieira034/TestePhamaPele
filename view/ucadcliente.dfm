@@ -9,12 +9,14 @@ inherited FrmCadCliente: TFrmCadCliente
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
   OnShow = FormShow
+  ExplicitTop = -64
   ExplicitWidth = 786
   ExplicitHeight = 601
   PixelsPerInch = 96
   TextHeight = 13
   inherited PnlTopo: TPanel
     Width = 780
+    ExplicitWidth = 780
     inherited BtnInserir: TSpeedButton
       Left = 19
       OnClick = BtnInserirClick
@@ -54,7 +56,7 @@ inherited FrmCadCliente: TFrmCadCliente
     Align = alTop
     ExplicitLeft = 0
     ExplicitTop = 65
-    ExplicitWidth = 852
+    ExplicitWidth = 780
     ExplicitHeight = 208
     inherited GrbDados: TGroupBox
       Left = 7
@@ -65,7 +67,7 @@ inherited FrmCadCliente: TFrmCadCliente
       Caption = ' Dados do Cliente '
       ExplicitLeft = 7
       ExplicitTop = 5
-      ExplicitWidth = 763
+      ExplicitWidth = 762
       ExplicitHeight = 197
       object Label6: TLabel
         Left = 296
@@ -227,7 +229,7 @@ inherited FrmCadCliente: TFrmCadCliente
         Width = 233
         Height = 21
         CharCase = ecUpperCase
-        MaxLength = 100
+        MaxLength = 50
         TabOrder = 4
       end
       object EdtCidade: TEdit
@@ -245,7 +247,7 @@ inherited FrmCadCliente: TFrmCadCliente
         Width = 129
         Height = 21
         CharCase = ecUpperCase
-        MaxLength = 100
+        MaxLength = 15
         TabOrder = 7
       end
       object EdtEmail: TEdit
@@ -253,7 +255,7 @@ inherited FrmCadCliente: TFrmCadCliente
         Top = 166
         Width = 320
         Height = 21
-        CharCase = ecUpperCase
+        CharCase = ecLowerCase
         MaxLength = 100
         TabOrder = 8
       end
@@ -265,12 +267,16 @@ inherited FrmCadCliente: TFrmCadCliente
     Width = 780
     Height = 262
     Align = alClient
+    ExplicitLeft = 0
+    ExplicitTop = 273
+    ExplicitWidth = 780
+    ExplicitHeight = 262
     inherited LblTotRegistros: TLabel
-      Left = 704
+      Left = 680
       Top = 243
       Anchors = [akRight, akBottom]
-      ExplicitLeft = 783
-      ExplicitTop = 207
+      ExplicitLeft = 680
+      ExplicitTop = 243
     end
     inherited GrbGrid: TGroupBox
       Left = 7
@@ -281,7 +287,7 @@ inherited FrmCadCliente: TFrmCadCliente
       Caption = ' Clientes Cadastrados '
       ExplicitLeft = 7
       ExplicitTop = 4
-      ExplicitWidth = 834
+      ExplicitWidth = 762
       ExplicitHeight = 235
       object DbGridClientes: TDBGrid
         Left = 9
@@ -304,12 +310,12 @@ inherited FrmCadCliente: TFrmCadCliente
             FieldName = 'id_cliente'
             Title.Alignment = taCenter
             Title.Caption = 'C'#243'digo'
-            Width = 36
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'nome'
+            Title.Alignment = taCenter
             Title.Caption = 'Nome do Cliente'
             Width = 281
             Visible = True
@@ -326,6 +332,7 @@ inherited FrmCadCliente: TFrmCadCliente
           item
             Expanded = False
             FieldName = 'endereco'
+            Title.Alignment = taCenter
             Title.Caption = 'Endere'#231'o'
             Width = 268
             Visible = True
@@ -333,6 +340,7 @@ inherited FrmCadCliente: TFrmCadCliente
           item
             Expanded = False
             FieldName = 'bairro'
+            Title.Alignment = taCenter
             Title.Caption = 'Bairro'
             Width = 134
             Visible = True
@@ -340,6 +348,7 @@ inherited FrmCadCliente: TFrmCadCliente
           item
             Expanded = False
             FieldName = 'cidade'
+            Title.Alignment = taCenter
             Title.Caption = 'Cidade'
             Width = 223
             Visible = True
@@ -356,6 +365,7 @@ inherited FrmCadCliente: TFrmCadCliente
           item
             Expanded = False
             FieldName = 'telefone'
+            Title.Alignment = taCenter
             Title.Caption = 'Telefone'
             Visible = True
           end
@@ -377,8 +387,6 @@ inherited FrmCadCliente: TFrmCadCliente
     BevelOuter = bvNone
     ParentBackground = False
     TabOrder = 3
-    ExplicitTop = 451
-    ExplicitWidth = 718
     DesignSize = (
       780
       37)
@@ -441,21 +449,18 @@ inherited FrmCadCliente: TFrmCadCliente
       CharCase = ecUpperCase
       TabOrder = 1
       OnKeyPress = EdtPesquisarKeyPress
-      ExplicitWidth = 595
     end
     object CbxFiltro: TComboBox
       Left = 61
       Top = 8
       Width = 94
       Height = 21
-      ItemIndex = 1
       TabOrder = 0
       Text = 'Nome'
       OnChange = CbxFiltroChange
       Items.Strings = (
         'C'#243'digo'
         'Nome'
-        'Cpf/Cnpj'
         'Cidade')
     end
   end

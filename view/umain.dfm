@@ -23,8 +23,6 @@ object FrmMain: TFrmMain
     Color = clGradientActiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitLeft = -183
-    ExplicitWidth = 896
     object BtnSair: TSpeedButton
       Left = 254
       Top = 10
@@ -381,6 +379,7 @@ object FrmMain: TFrmMain
         16B78116B78116B78116B78116B78116B78116B78116B78116B78116B78116B7
         8116B78116B78116B78116B78116B78116B88317CBA75EFBFBFB}
       Layout = blGlyphTop
+      OnClick = BtnProdutosClick
     end
     object BtnClientes: TSpeedButton
       Left = 3

@@ -15,7 +15,14 @@ uses
   ucadastropadrao in 'view\ucadastropadrao.pas' {FrmCadastroPadrao},
   produto.model in 'model\produto.model.pas',
   cliente.controller in 'controller\cliente.controller.pas',
-  ucadcliente in 'view\ucadcliente.pas' {FrmCadCliente};
+  ucadcliente in 'view\ucadcliente.pas' {FrmCadCliente},
+  produto.service in 'dao\produto.service.pas',
+  produto.repository in 'dao\produto.repository.pas',
+  produto.controller in 'controller\produto.controller.pas',
+  ucadproduto in 'view\ucadproduto.pas' {FrmCadProduto},
+  tipoproduto.service in 'dao\tipoproduto.service.pas',
+  tipoproduto.model in 'model\tipoproduto.model.pas',
+  tipoproduto.controller in 'controller\tipoproduto.controller.pas';
 
 {$R *.res}
 

@@ -121,6 +121,16 @@
             <Form>FrmCadCliente</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="dao\produto.service.pas"/>
+        <DCCReference Include="dao\produto.repository.pas"/>
+        <DCCReference Include="controller\produto.controller.pas"/>
+        <DCCReference Include="view\ucadproduto.pas">
+            <Form>FrmCadProduto</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="dao\tipoproduto.service.pas"/>
+        <DCCReference Include="model\tipoproduto.model.pas"/>
+        <DCCReference Include="controller\tipoproduto.controller.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
