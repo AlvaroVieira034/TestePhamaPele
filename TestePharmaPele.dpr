@@ -34,7 +34,12 @@ uses
   ipedidoitens.repository in 'interface\ipedidoitens.repository.pas',
   pedido.repository in 'dao\pedido.repository.pas',
   pedido.service in 'dao\pedido.service.pas',
-  pedidoitens.repository in 'dao\pedidoitens.repository.pas';
+  pedidoitens.repository in 'dao\pedidoitens.repository.pas',
+  entregador.model in 'model\entregador.model.pas',
+  entregador.repository in 'dao\entregador.repository.pas',
+  entregador.service in 'dao\entregador.service.pas',
+  entregador.controller in 'controller\entregador.controller.pas',
+  ucadentregador in 'view\ucadentregador.pas' {FrmCadEntregador};
 
 {$R *.res}
 

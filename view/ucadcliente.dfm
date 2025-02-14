@@ -9,7 +9,6 @@ inherited FrmCadCliente: TFrmCadCliente
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
   OnShow = FormShow
-  ExplicitTop = -34
   ExplicitWidth = 786
   ExplicitHeight = 601
   PixelsPerInch = 96

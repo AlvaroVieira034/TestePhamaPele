@@ -18,10 +18,12 @@ type
     Timer1: TTimer;
     BtnCriarEntregas: TSpeedButton;
     BtnVerEntregas: TSpeedButton;
+    BtnEntregadores: TSpeedButton;
     procedure BtnClientesClick(Sender: TObject);
     procedure BtnProdutosClick(Sender: TObject);
     procedure BtnPedidosClick(Sender: TObject);
     procedure BtnSairClick(Sender: TObject);
+    procedure BtnEntregadoresClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -35,7 +37,7 @@ implementation
 
 {$R *.dfm}
 
-uses ucadcliente, ucadproduto, ucadpedido;
+uses ucadcliente, ucadproduto, ucadentregador, ucadpedido;
 
 procedure TFrmMain.BtnClientesClick(Sender: TObject);
 begin
@@ -55,6 +57,16 @@ begin
   FrmCadProduto.ShowModal;
   FrmCadProduto.Free;
   FrmCadProduto := nil;
+end;
+
+procedure TFrmMain.BtnEntregadoresClick(Sender: TObject);
+begin
+  if not Assigned(FrmCadEntregador) then
+    FrmCadEntregador := TFrmCadEntregador.Create(Self);
+
+  FrmCadEntregador.ShowModal;
+  FrmCadEntregador.Free;
+  FrmCadEntregador := nil;
 end;
 
 procedure TFrmMain.BtnPedidosClick(Sender: TObject);

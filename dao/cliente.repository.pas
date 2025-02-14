@@ -107,7 +107,7 @@ begin
         ParamByName('ENDERECO').AsString := Endereco;
         ParamByName('BAIRRO').AsString := Bairro;
         ParamByName('CIDADE').AsString := Cidade;
-        ParamByName('estado').AsString := estado;
+        ParamByName('ESTADO').AsString := estado;
         ParamByName('CEP').AsString := Cep;
         ParamByName('TELEFONE').AsString := Telefone;
         ParamByName('EMAIL').AsString := Email;

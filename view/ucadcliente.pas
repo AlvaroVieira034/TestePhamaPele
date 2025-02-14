@@ -109,7 +109,7 @@ end;
 
 destructor TFrmCadCliente.Destroy;
 begin
-if Assigned(DsClientes) then
+  if Assigned(DsClientes) then
     DsClientes.Free;
 
   inherited Destroy;
