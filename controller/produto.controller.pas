@@ -24,7 +24,7 @@ type
     function Inserir(FProduto: TProduto; var sErro: string): Boolean;
     function Alterar(FProduto: TProduto; iCodigo: Integer; sErro: string): Boolean;
     function Excluir(iCodigo: Integer; var sErro: string): Boolean;
-    function GetValorUnitario(ACodigo: Integer): Double;
+    function GetProdutoInfo(ACodigo: Integer): TProdutoInfo;
     function GetDataSource: TDataSource;
     function ValidarDados(const ANome, ACodigo, AQuantidade, ADataValidade, AValor: string; out AErro: TCampoInvalido): Boolean;
     function ExecutarTransacao(AOperacao: TProc; var sErro: string): Boolean;
@@ -101,9 +101,9 @@ begin
   Result := FProdutoRepository.Excluir(iCodigo, sErro);
 end;
 
-function TProdutoController.GetValorUnitario(ACodigo: Integer): Double;
+function TProdutoController.GetProdutoInfo(ACodigo: Integer): TProdutoInfo;
 begin
-  Result := FProdutoService.GetValorUnitario(ACodigo);
+  Result := FProdutoService.GetProdutoInfo(ACodigo);
 end;
 
 function TProdutoController.GetDataSource: TDataSource;

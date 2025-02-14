@@ -4,18 +4,24 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Buttons, Vcl.ExtCtrls;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Buttons, Vcl.ExtCtrls,
+  System.ImageList, Vcl.ImgList;
 
 type
   TFrmMain = class(TForm)
     PanelBotoesMenu: TPanel;
     BtnSair: TSpeedButton;
-    BtnVendas: TSpeedButton;
+    BtnPedidos: TSpeedButton;
     BtnProdutos: TSpeedButton;
     BtnClientes: TSpeedButton;
+    ImageList: TImageList;
+    Timer1: TTimer;
+    BtnCriarEntregas: TSpeedButton;
+    BtnVerEntregas: TSpeedButton;
     procedure BtnClientesClick(Sender: TObject);
-    procedure BtnSairClick(Sender: TObject);
     procedure BtnProdutosClick(Sender: TObject);
+    procedure BtnPedidosClick(Sender: TObject);
+    procedure BtnSairClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -29,7 +35,7 @@ implementation
 
 {$R *.dfm}
 
-uses ucadcliente, ucadproduto;
+uses ucadcliente, ucadproduto, ucadpedido;
 
 procedure TFrmMain.BtnClientesClick(Sender: TObject);
 begin
@@ -49,6 +55,16 @@ begin
   FrmCadProduto.ShowModal;
   FrmCadProduto.Free;
   FrmCadProduto := nil;
+end;
+
+procedure TFrmMain.BtnPedidosClick(Sender: TObject);
+begin
+  if not Assigned(FrmCadPedido) then
+    FrmCadPedido := TFrmCadPedido.Create(Self);
+
+  FrmCadPedido.ShowModal;
+  FrmCadPedido.Free;
+  FrmCadPedido := nil;
 end;
 
 procedure TFrmMain.BtnSairClick(Sender: TObject);

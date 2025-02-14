@@ -22,7 +22,19 @@ uses
   ucadproduto in 'view\ucadproduto.pas' {FrmCadProduto},
   tipoproduto.service in 'dao\tipoproduto.service.pas',
   tipoproduto.model in 'model\tipoproduto.model.pas',
-  tipoproduto.controller in 'controller\tipoproduto.controller.pas';
+  tipoproduto.controller in 'controller\tipoproduto.controller.pas',
+  ucadpedido in 'view\ucadpedido.pas' {FrmCadPedido},
+  pedido.model in 'model\pedido.model.pas',
+  pedidoitens.model in 'model\pedidoitens.model.pas',
+  upesqpedidos in 'view\upesqpedidos.pas' {FrmPesquisaPedidos},
+  pedido.controller in 'controller\pedido.controller.pas',
+  pedidoitens.controller in 'controller\pedidoitens.controller.pas',
+  ipedido.repository in 'interface\ipedido.repository.pas',
+  ipedido.service in 'interface\ipedido.service.pas',
+  ipedidoitens.repository in 'interface\ipedidoitens.repository.pas',
+  pedido.repository in 'dao\pedido.repository.pas',
+  pedido.service in 'dao\pedido.service.pas',
+  pedidoitens.repository in 'dao\pedidoitens.repository.pas';
 
 {$R *.res}
 

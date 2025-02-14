@@ -80,7 +80,7 @@ begin
   begin
     CriarTabelas();
     CriarCamposTabelas();
-    sCampo := 'vda.dta_Pedido';
+    sCampo := 'ped.data_pedido';
     FPedido := TPedido.Create;
     PedidoController := TPedidoController.Create(TPedidoRepository.Create, TPedidoService.Create);
   end
@@ -102,7 +102,7 @@ end;
 
 procedure TFrmPesquisaPedidos.PreencherGrid(TblPedidos: TFDQuery; APesquisa, ACampo: string);
 begin
-  PedidoController.PreencherGrid(TblPedidos, APesquisa + '%', ACampo);
+  PedidoController.PreencherGrid(TblPedidos, APesquisa, ACampo);
 end;
 
 procedure TFrmPesquisaPedidos.CriarTabelas;
@@ -122,15 +122,15 @@ var
 begin
   // Criando o campo COD_Pedido
   IntegerField := TIntegerField.Create(TblPedidos);
-  IntegerField.FieldName := 'COD_Pedido';
+  IntegerField.FieldName := 'ID_PEDIDO';
   IntegerField.DataSet := TblPedidos;
-  IntegerField.Name := 'TblPedidosCOD_Pedido';
+  IntegerField.Name := 'TblPedidosID_PEDIDO';
 
   // Criando o campo DTA_Pedido
   DateField := TDateField.Create(TblPedidos);
-  DateField.FieldName := 'DTA_Pedido';
+  DateField.FieldName := 'DATA_PEDIDO';
   DateField.DataSet := TblPedidos;
-  DateField.Name := 'TblPedidosDTA_Pedido';
+  DateField.Name := 'TblPedidosDATA_PEDIDO';
   DateField.DisplayFormat := 'dd/mm/yyyy';
 
   // Criando o campo NOME_CLIENTE
@@ -140,18 +140,18 @@ begin
   StringField.DataSet := TblPedidos;
   StringField.Name := 'TblPedidosNOMECLIENTE';
 
-  // Criando o campo VAL_PRECO
+  // Criando o campo VAL_PEDIDO
   FloatField := TFloatField.Create(TblPedidos);
-  FloatField.FieldName := 'VAL_Pedido';
+  FloatField.FieldName := 'VALOR_PEDIDO';
   FloatField.DataSet := TblPedidos;
-  FloatField.Name := 'TblPedidosVAL_Pedido';
+  FloatField.Name := 'TblPedidosVALOR_PEDIDO';
   FloatField.DisplayFormat := '#,###,##0.00';
 
 end;
 
 procedure TFrmPesquisaPedidos.DbGridPedidosDblClick(Sender: TObject);
 begin
-  FrmCadPedido.codigoPedido := DsPedidos.DataSet.FieldByName('COD_Pedido').AsInteger;
+  FrmCadPedido.codigoPedido := DsPedidos.DataSet.FieldByName('ID_PEDIDO').AsInteger;
   FrmCadPedido.pesqPedido := True;
   FrmCadPedido.FOperacao := opNavegar;
   BtnSair.Click;
@@ -161,7 +161,7 @@ procedure TFrmPesquisaPedidos.DbGridPedidosKeyDown(Sender: TObject; var Key: Wor
 begin
   if Key = VK_RETURN then
   begin
-    FrmCadPedido.codigoPedido := DsPedidos.DataSet.FieldByName('COD_Pedido').AsInteger;
+    FrmCadPedido.codigoPedido := DsPedidos.DataSet.FieldByName('ID_PEDIDO').AsInteger;
     FrmCadPedido.pesqPedido := True;
     FrmCadPedido.FOperacao := opEditar;
     BtnSair.Click;
@@ -176,7 +176,7 @@ end;
 
 procedure TFrmPesquisaPedidos.BtnSelecionarClick(Sender: TObject);
 begin
-  FrmCadPedido.codigoPedido := DsPedidos.DataSet.FieldByName('COD_Pedido').AsInteger;
+  FrmCadPedido.codigoPedido := DsPedidos.DataSet.FieldByName('ID_PEDIDO').AsInteger;
   FrmCadPedido.pesqPedido := True;
   FrmCadPedido.FOperacao := opNavegar;
   BtnSair.Click;

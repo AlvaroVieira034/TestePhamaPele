@@ -6,6 +6,12 @@ uses iinterface.service, conexao, produto.model, FireDAC.Comp.Client, FireDAC.St
      Data.DB;
 
 type
+  TProdutoInfo = record
+    ValorUnitario: Double;
+    RequerPrescricao: Char;
+    CondicoesArmazenamento: string;
+  end;
+
   TProdutoService = class(TInterfacedObject, IInterfaceService<TProduto>)
 
   private
@@ -19,7 +25,7 @@ type
     procedure PreencherGridForm(APesquisa, ACampo: string);
     procedure PreencherComboBox(TblProdutos: TFDQuery);
     procedure PreencherCamposForm(FProduto: TProduto; iCodigo: Integer);
-    function GetValorUnitario(ACodigo: Integer): Double;
+    function GetProdutoInfo(ACodigo: Integer): TProdutoInfo;
     function GetDataSource: TDataSource;
     procedure CriarTabelas;
     procedure CriarCamposTabelas;
@@ -33,7 +39,7 @@ implementation
 constructor TProdutoService.Create;
 begin
   CriarTabelas();
-  //CriarCamposTabelas();
+  CriarCamposTabelas();
 end;
 
 destructor TProdutoService.Destroy;
@@ -118,7 +124,6 @@ begin
   FloatField.DataSet := TblProdutos;
   FloatField.Name := 'TblProdutosVALOR';
   FloatField.DisplayFormat := '#,###,##0.00';
-
 end;
 
 procedure TProdutoService.PreencherGridForm(APesquisa, ACampo: string);
@@ -136,7 +141,7 @@ begin
     SQL.Add('   tpp.descricao, ');
     SQL.Add('   prd.condicoes_armazenamento, ');
     SQL.Add('   prd.requer_prescricao, ');
-    SQL.Add('   prd.valor ');
+    SQL.Add('   cast(prd.valor as DOUBLE PRECISION) as valor ');
     SQL.Add(' from produto prd');
     SQL.Add('    join  tipo_produto tpp on prd.id_tipo_produto = tpp.id_tipo_produto');
     SQL.Add('where ' + ACampo + ' like :PNAME');
@@ -148,11 +153,11 @@ end;
 
 procedure TProdutoService.PreencherComboBox(TblProdutos: TFDQuery);
 begin
-  with QryTemp do
+  with TblProdutos do
   begin
     Close;
     SQL.Clear;
-    SQL.Add('select * from produto prd order by prd.des_descricao ');
+    SQL.Add('select * from produto prd order by prd.nome ');
     Open();
   end;
 end;
@@ -178,7 +183,7 @@ begin
 
     ParamByName('ID_PRODUTO').AsInteger := iCodigo;
 
-    Open;
+    Open();
 
     FProduto.Id_Produto := FieldByName('ID_PRODUTO').AsInteger;
     FProduto.Nome := FieldByName('NOME').AsString;
@@ -192,19 +197,27 @@ begin
   end;
 end;
 
-function TProdutoService.GetValorUnitario(ACodigo: Integer): Double;
+function TProdutoService.GetProdutoInfo(ACodigo: Integer): TProdutoInfo;
 begin
-  Result := 0;
+  Result.ValorUnitario := 1;
+  Result.RequerPrescricao := 'N';
+  Result.CondicoesArmazenamento := '';
+
   with QryTemp do
   begin
     SQL.Clear;
-    SQL.Add('select id_produto, ');
-    SQL.Add('valor');
-    SQL.Add('from produto');
+    SQL.Add('select valor, requer_prescricao, condicoes_armazenamento ');
+    SQL.Add('from produto ');
     SQL.Add('where id_produto = :id_produto');
     ParamByName('ID_PRODUTO').AsInteger := ACodigo;
     Open;
-    Result := FieldByName('VALOR').AsFloat
+
+    if not IsEmpty then
+    begin
+      Result.ValorUnitario := FieldByName('VALOR').AsFloat;
+      Result.RequerPrescricao := FieldByName('REQUER_PRESCRICAO').AsString[1];
+      Result.CondicoesArmazenamento := FieldByName('CONDICOES_ARMAZENAMENTO').AsString;
+    end;
   end;
 end;
 

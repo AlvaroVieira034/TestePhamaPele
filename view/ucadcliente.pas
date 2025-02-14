@@ -64,6 +64,8 @@ type
     procedure DbGridClientesCellClick(Column: TColumn);
     procedure DbGridClientesKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure EdtPesquisarKeyPress(Sender: TObject; var Key: Char);
+    procedure EdtPesquisarChange(Sender: TObject);
+    procedure EdtCepChange(Sender: TObject);
 
   private
     ValoresOriginais: array of string;
@@ -78,7 +80,6 @@ type
     procedure MostrarMensagemErro(AErro: TCampoInvalido);
     procedure VerificaBotoes(AOperacao: TOperacao);
     function GetDataSource: TDataSource;
-
 
   public
     FOperacao: TOperacao;
@@ -136,6 +137,7 @@ procedure TFrmCadCliente.FormShow(Sender: TObject);
 begin
   inherited;
   PreencherGridClientes();
+  DsClientes := FClienteController.GetDataSource();
   DbGridClientes.Columns[0].Width := 50;
   DbGridClientes.Columns[1].Width := 270;
   DbGridClientes.Columns[2].Width := 70;
@@ -243,7 +245,7 @@ begin
   end;
 
   Result := True;
-  DsClientes.DataSet.Refresh;
+  PreencherGridClientes();
   FOperacao := opNavegar;
 end;
 
@@ -387,7 +389,7 @@ procedure TFrmCadCliente.BtnPesquisarCepClick(Sender: TObject);
 var FCepService: TCEPService;
     JSONValue: TJSONValue;
     JSONObject: TJSONObject;
-    Response: string;
+    Response,  NCep: string;
 begin
   inherited;
   FCepService := TCEPService.Create;
@@ -398,7 +400,9 @@ begin
       Exit;
     end;
 
-    Response := FCepService.ConsultaCep(EdtCep.Text, True);
+    NCep := StringReplace(StringReplace(EdtCep.Text, '-', '', [rfReplaceAll]), '.', '', [rfReplaceAll]);
+
+    Response := FCepService.ConsultaCep(NCep, True);
     JSONValue := TJSONObject.ParseJSONValue(Response);
     if Assigned(JSONValue) and (JSONValue is TJSONObject) then
     begin
@@ -476,11 +480,23 @@ begin
     perform(WM_NEXTDLGCTL,0,0)
 end;
 
+procedure TFrmCadCliente.EdtCepChange(Sender: TObject);
+begin
+  inherited;
+  Formatar(EdtCep, TFormato.CEP);
+end;
+
 procedure TFrmCadCliente.EdtCepKeyPress(Sender: TObject; var Key: Char);
 begin
   inherited;
   if not (key in ['0'..'9', #08]) then
     key := #0;
+end;
+
+procedure TFrmCadCliente.EdtPesquisarChange(Sender: TObject);
+begin
+  inherited;
+  PreencherGridClientes();
 end;
 
 procedure TFrmCadCliente.EdtPesquisarKeyPress(Sender: TObject; var Key: Char);

@@ -9,7 +9,7 @@ inherited FrmCadCliente: TFrmCadCliente
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
   OnShow = FormShow
-  ExplicitTop = -64
+  ExplicitTop = -34
   ExplicitWidth = 786
   ExplicitHeight = 601
   PixelsPerInch = 96
@@ -183,6 +183,7 @@ inherited FrmCadCliente: TFrmCadCliente
         CharCase = ecUpperCase
         MaxLength = 10
         TabOrder = 2
+        OnChange = EdtCepChange
         OnKeyPress = EdtCepKeyPress
       end
       object EdtEndereco: TEdit
@@ -290,8 +291,8 @@ inherited FrmCadCliente: TFrmCadCliente
       ExplicitWidth = 762
       ExplicitHeight = 235
       object DbGridClientes: TDBGrid
-        Left = 9
-        Top = 18
+        Left = 16
+        Top = 26
         Width = 743
         Height = 206
         Anchors = [akLeft, akTop, akRight]
@@ -448,6 +449,7 @@ inherited FrmCadCliente: TFrmCadCliente
       Anchors = [akLeft, akTop, akRight, akBottom]
       CharCase = ecUpperCase
       TabOrder = 1
+      OnChange = EdtPesquisarChange
       OnKeyPress = EdtPesquisarKeyPress
     end
     object CbxFiltro: TComboBox

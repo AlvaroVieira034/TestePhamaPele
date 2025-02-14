@@ -27,9 +27,6 @@ object FrmPesquisaPedidos: TFrmPesquisaPedidos
     BevelOuter = bvNone
     ParentBackground = False
     TabOrder = 0
-    ExplicitLeft = -43
-    ExplicitTop = 262
-    ExplicitWidth = 678
     DesignSize = (
       693
       37)
@@ -169,7 +166,6 @@ object FrmPesquisaPedidos: TFrmPesquisaPedidos
       Anchors = [akLeft, akTop, akRight]
       CharCase = ecUpperCase
       TabOrder = 1
-      ExplicitWidth = 333
     end
     object CbxFiltro: TComboBox
       Left = 59
@@ -193,10 +189,6 @@ object FrmPesquisaPedidos: TFrmPesquisaPedidos
     Align = alClient
     Caption = ' Selecione um pedido '
     TabOrder = 1
-    ExplicitLeft = -47
-    ExplicitTop = -88
-    ExplicitWidth = 682
-    ExplicitHeight = 387
     DesignSize = (
       693
       360)
@@ -217,7 +209,7 @@ object FrmPesquisaPedidos: TFrmPesquisaPedidos
       Columns = <
         item
           Expanded = False
-          FieldName = 'COD_PEDIDO'
+          FieldName = 'ID_PEDIDO'
           Title.Alignment = taCenter
           Title.Caption = 'C'#243'd. Pedido'
           Visible = True
@@ -225,7 +217,7 @@ object FrmPesquisaPedidos: TFrmPesquisaPedidos
         item
           Alignment = taCenter
           Expanded = False
-          FieldName = 'DTA_PEDIDO'
+          FieldName = 'DATA_PEDIDO'
           Title.Alignment = taCenter
           Title.Caption = 'Data do Pedido'
           Width = 85
@@ -240,7 +232,7 @@ object FrmPesquisaPedidos: TFrmPesquisaPedidos
         end
         item
           Expanded = False
-          FieldName = 'VAL_PEDIDO'
+          FieldName = 'VALOR_PEDIDO'
           Title.Alignment = taRightJustify
           Title.Caption = 'Total do Pedido'
           Width = 97

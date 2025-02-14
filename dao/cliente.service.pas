@@ -79,7 +79,7 @@ end;
 
 procedure TClienteService.PreencherComboBox(TblClientes: TFDQuery);
 begin
-  with QryTemp do
+  with TblClientes do
   begin
     Close;
     SQL.Clear;
