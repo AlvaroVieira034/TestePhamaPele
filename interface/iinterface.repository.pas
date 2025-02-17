@@ -2,7 +2,7 @@ unit iinterface.repository;
 
 interface
 
-uses cliente.model, produto.model, Data.DB, System.SysUtils;
+uses Data.DB, System.SysUtils;
 
 type
   IInterfaceRepository<T> = interface

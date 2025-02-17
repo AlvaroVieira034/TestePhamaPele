@@ -13,6 +13,7 @@ Type
     FDes_Cliente: string;
     FValor_Pedido: Double;
     FStatus_Entrega: Integer;
+    FPrioridade: Integer;
     procedure SetId_Cliente(const Value: Integer);
 
   public
@@ -22,6 +23,7 @@ Type
     property Des_Cliente: string read FDes_Cliente write FDes_Cliente;
     property Valor_Pedido: Double read FValor_Pedido write FValor_Pedido;
     property Status_Entrega: Integer read FStatus_Entrega write FStatus_Entrega;
+    property Prioridade: Integer read FPrioridade write FPrioridade;
 
   end;
 

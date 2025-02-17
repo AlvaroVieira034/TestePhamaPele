@@ -39,7 +39,14 @@ uses
   entregador.repository in 'dao\entregador.repository.pas',
   entregador.service in 'dao\entregador.service.pas',
   entregador.controller in 'controller\entregador.controller.pas',
-  ucadentregador in 'view\ucadentregador.pas' {FrmCadEntregador};
+  ucadentregador in 'view\ucadentregador.pas' {FrmCadEntregador},
+  entregas.repository in 'dao\entregas.repository.pas',
+  entregas.service in 'dao\entregas.service.pas',
+  entregas.model in 'model\entregas.model.pas',
+  entregas.controller in 'controller\entregas.controller.pas',
+  ientregas.repository in 'interface\ientregas.repository.pas',
+  ientregas.service in 'interface\ientregas.service.pas',
+  ucadentrega in 'view\ucadentrega.pas' {FrmCadEntrega};
 
 {$R *.res}
 

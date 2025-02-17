@@ -2,7 +2,7 @@ unit iinterface.service;
 
 interface
 
-uses cliente.model, produto.model, Data.DB, FireDAC.Comp.Client;
+uses Data.DB, FireDAC.Comp.Client;
 
 type
   IInterfaceService<T> = interface

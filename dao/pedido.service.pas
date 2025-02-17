@@ -10,11 +10,13 @@ type
 
   private
     TblPedidos: TFDQuery;
+    QryTemp: TFDQuery;
     DsPedidos: TDataSource;
 
   public
     constructor Create;
     destructor Destroy; override;
+    function RetornaPrioridadeProduto(ACodigo: Integer): Integer;
     procedure PreencherGridPedidos(TblPedidos: TFDQuery; APesquisa, ACampo: string);
     procedure PreencherCamposForm(FPedido: TPedido; ACodigo: Integer);
 
@@ -27,12 +29,13 @@ implementation
 constructor TPedidoService.Create;
 begin
   TblPedidos := TConexao.GetInstance.Connection.CriarQuery;
+  QryTemp := TConexao.GetInstance.Connection.CriarQuery;
 end;
 
 destructor TPedidoService.Destroy;
 begin
   TblPedidos.Free;
-
+  QryTemp.Free;
   inherited;
 end;
 
@@ -55,6 +58,32 @@ begin
     ParamByName('PNAME').AsString := APesquisa;
     Prepared := True;
     Open();
+  end;
+end;
+
+function TPedidoService.RetornaPrioridadeProduto(ACodigo: Integer): Integer;
+var LIdTipoProduto: Integer;
+begin
+  with QryTemp do
+  begin
+    SQL.Clear;
+    SQL.Add('select id_tipo_produto from produto where id_produto = :id_produto');
+    ParamByName('ID_PRODUTO').AsInteger := ACodigo;
+    Open();
+
+    if not IsEmpty then
+    begin
+      LIdTipoProduto := FieldByName('ID_TIPO_PRODUTO').AsInteger;
+
+      // Define a prioridade com base no id_tipo_produto
+      case LIdTipoProduto of
+        3: Result := 0; // Prioridade máxima
+        2: Result := 1; // Prioridade alta
+        5: Result := 2; // Prioridade média
+      else
+        Result := 3; // Prioridade normal (qualquer outro valor)
+      end;
+    end;
   end;
 end;
 

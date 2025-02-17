@@ -21,7 +21,9 @@ type
     function Inserir(FPedido: TPedido; Transacao: TFDTransaction; var sErro: string): Boolean;
     function Alterar(FPedido: TPedido; ACodigo: Integer; sErro: string): Boolean;
     function Excluir(ACodigo: Integer; var sErro: string): Boolean;
+    procedure AtulizarStatusEntrega(AStatus, APedido: Integer; var sErro: string);
     function ExecutarTransacao(AOperacao: TProc; var sErro: string): Boolean;
+    function RetornaPrioridadeProduto(ACodigo: Integer): Integer;
 
   end;
 
@@ -96,9 +98,19 @@ begin
   Result := FPedidoRepository.Excluir(ACodigo, sErro);
 end;
 
+procedure TPedidoController.AtulizarStatusEntrega(AStatus, APedido: Integer; var sErro: string);
+begin
+  FPedidoRepository.AtulizarStatusEntrega(AStatus, APedido, sErro);
+end;
+
 function TPedidoController.ExecutarTransacao(AOperacao: TProc;  var sErro: string): Boolean;
 begin
   Result := FPedidoRepository.ExecutarTransacao(AOperacao, sErro);
+end;
+
+function TPedidoController.RetornaPrioridadeProduto(ACodigo: Integer): Integer;
+begin
+  Result := FPedidoService.RetornaPrioridadeProduto(ACodigo);
 end;
 
 end.

@@ -129,7 +129,7 @@ type
 var
   FrmCadPedido: TFrmCadPedido;
   totPedido, totPedidoAnt: Double;
-  idItem: Integer;
+  idItem, prioridade_produto, prioridade_pedido: Integer;
   alterouGrid: Boolean;
   sErro: string;
 
@@ -190,6 +190,7 @@ begin
     // Variáveis locais
     sCampo := 'ped.data_pedido';
     totPedido := 0;
+    prioridade_pedido := 3;
     pesqPedido := False;
     SetLength(ValoresOriginais, 6);
     FOperacao := opInicio;
@@ -320,6 +321,7 @@ begin
     Valor_Pedido := StrToFloat(StringReplace(StringReplace(EdtTotalPedido.Text, '.', '',
                                [rfReplaceAll]), ',', FormatSettings.DecimalSeparator, [rfReplaceAll]));
     Status_Entrega := CmbStatus.ItemIndex;
+    Prioridade := prioridade_pedido;
   end;
 
   if not TransacaoPedidos.Connection.Connected then
@@ -556,6 +558,11 @@ begin
       end;
     end;
   end;
+
+  prioridade_produto := FPedidoController.RetornaPrioridadeProduto(LCbxProdutos.KeyValue);
+  if prioridade_produto < prioridade_pedido then
+     prioridade_pedido := prioridade_produto;
+
 end;
 
 procedure TFrmCadPedido.VerificaBotoes(AOperacao: TOperacao);
@@ -600,6 +607,12 @@ end;
 procedure TFrmCadPedido.BtnAlterarClick(Sender: TObject);
 begin
   inherited;
+  if CmbStatus.ItemIndex > 0 then
+  begin
+    MessageDlg('Somente pedidos com status de entrega PENDENTE podem ser alterados!', mtWarning, [mbOK],0);
+    Exit;
+  end;
+
   FOperacao := opEditar;
   BtnInserirItens.Caption := 'Alterar Itens';
   BtnInserirItens.Enabled := True;

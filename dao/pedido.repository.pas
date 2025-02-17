@@ -17,7 +17,8 @@ type
     destructor Destroy; override;
     function Inserir(FPedido: TPedido; Transacao: TFDTransaction; out sErro: string): Boolean;
     function Alterar(FPedido: TPedido; ACodigo: Integer; out sErro: string): Boolean;
-    function Excluir(ACodigo: Integer; out sErro : string): Boolean;
+    function Excluir(ACodigo: Integer; out sErro: string): Boolean;
+    procedure AtulizarStatusEntrega(AStatus, APedido: Integer; out sErro: string);
     function ExecutarTransacao(AOperacao: TProc; var sErro: string): Boolean;
     procedure CriarTabelas;
 
@@ -50,16 +51,19 @@ begin
     SQL.Add('id_cliente, ');
     SQL.Add('data_pedido, ');
     SQL.Add('valor_pedido, ');
-    SQL.Add('status_entrega) ');
+    SQL.Add('status_entrega, ');
+    SQL.Add('prioridade) ');
     SQL.Add('values (:id_cliente, ');
     SQL.Add(':data_pedido, ');
     SQL.Add(':valor_pedido, ');
-    SQL.Add(':status_entrega) ');
+    SQL.Add(':status_entrega, ');
+    SQL.Add(':prioridade) ');
 
     ParamByName('ID_CLIENTE').AsInteger := Id_Cliente;
     ParamByName('DATA_PEDIDO').AsDateTime := Data_Pedido;
     ParamByName('VALOR_PEDIDO').AsFloat := Valor_Pedido;
     ParamByName('STATUS_ENTREGA').AsInteger := Status_Entrega;
+    ParamByName('PRIORIDADE').AsInteger := Prioridade;
 
     try
       Prepared := True;
@@ -92,12 +96,14 @@ begin
     SQL.Add('data_pedido = :data_pedido, ');
     SQL.Add('valor_pedido = :valor_pedido,');
     SQL.Add('status_entrega = :status_entrega');
+    SQL.Add('prioridade = :prioridade');
     SQL.Add('where id_pedido = :id_pedido');
 
     ParamByName('ID_CLIENTE').AsInteger := Id_Cliente;
     ParamByName('DATA_PEDIDO').AsDateTime := Data_Pedido;
     ParamByName('VALOR_PEDIDO').AsFloat := Valor_Pedido;
     ParamByName('STATUS_ENTREGA').AsInteger := Status_Entrega;
+    ParamByName('PRIORIDADE').AsInteger := Prioridade;
     ParamByName('ID_PEDIDO').AsInteger := ACodigo;
 
     try
@@ -135,6 +141,28 @@ begin
   end;
 end;
 
+procedure TPedidoRepository.AtulizarStatusEntrega(AStatus, APedido: Integer; out sErro: string);
+begin
+  with QryPedidos do
+  begin
+    Close;
+    SQL.Clear;
+    SQL.Text := 'update pedido set status_entrega = :status_entrega where id_pedido = :id_pedido';
+    ParamByName('STATUS_ENTREGA').AsInteger := AStatus;
+    ParamByName('ID_PEDIDO').AsInteger := APedido;
+
+    try
+      ExecSQL;
+    except
+      on E: Exception do
+      begin
+      sErro := 'Ocorreu um erro ao alterar o status do pedido!' + sLineBreak + E.Message;
+      raise;
+      end;
+    end
+  end;
+end;
+
 function TPedidoRepository.ExecutarTransacao(AOperacao: TProc; var sErro: string): Boolean;
 begin
   Result := False;
@@ -151,7 +179,7 @@ begin
       on E: Exception do
       begin
         Transacao.Rollback;
-        sErro := 'Ocorreu um erro ao excluir o pedido !' + sLineBreak + E.Message;
+        sErro := 'Ocorreu um erro ao persistir o pedido !' + sLineBreak + E.Message;
         raise;
       end;
     end;

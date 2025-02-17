@@ -10,7 +10,6 @@ inherited FrmCadPedido: TFrmCadPedido
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
   OnShow = FormShow
-  ExplicitTop = -57
   ExplicitWidth = 792
   ExplicitHeight = 613
   PixelsPerInch = 96
@@ -213,11 +212,11 @@ inherited FrmCadPedido: TFrmCadPedido
         ExplicitTop = 153
       end
       object Label5: TLabel
-        Left = 526
+        Left = 516
         Top = 35
-        Width = 85
+        Width = 91
         Height = 13
-        Caption = '&Status do Pedido:'
+        Caption = '&Status da Entrega:'
       end
       object EdtCodPedido: TEdit
         Left = 134
