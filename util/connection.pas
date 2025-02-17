@@ -50,25 +50,9 @@ begin
     // Ler o tipo de banco de dados configurado
     Banco := Ini.ReadString('DatabaseConfig', 'Banco', 'FIREBIRD');
 
-    if Banco = 'MSSQL' then
-    begin
-      // Configuração para MSSQL
-      FDPhysMSSQL := TFDPhysMSSQLDriverLink.Create(nil);
-
-      FConexao := TFDConnection.Create(nil);
-      FConexao.Params.DriverID := 'MSSQL';
-      FConexao.Params.Database := Ini.ReadString('Database', 'Database', 'bdtestewk');
-      FConexao.Params.UserName := Ini.ReadString('Database', 'UserName', 'sa');
-      FConexao.Params.Password := Ini.ReadString('Database', 'Password', 'info');
-      FConexao.Params.Add('Server=' + Ini.ReadString('Database', 'Server', 'PC-ALVARO\SQLEXPRESS'));
-      FConexao.Params.Add('Port=' + Ini.ReadString('Database', 'Port', '1433'));
-      FConexao.LoginPrompt := False;
-    end
-    else if Banco = 'FIREBIRD' then
+    if Banco = 'FIREBIRD' then
     begin
       // Configuração para Firebird
-      //FDPhysFBDriverLink.Create(nil);
-      //FDPhysFBDriverLink.VendorLib := 'c:\windows\system32\fbclient.dll'; // Caminho para a biblioteca do Firebird
 
       FConexao := TFDConnection.Create(nil);
       FConexao.Params.DriverID := 'FB'; // Driver do Firebird no FireDAC
