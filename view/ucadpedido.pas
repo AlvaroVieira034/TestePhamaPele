@@ -144,7 +144,6 @@ begin
   TblClientes := TFDQuery.Create(nil);
   DsProdutos := TDataSource.Create(nil);
   DsClientes := TDataSource.Create(nil);
-  TransacaoPedidos := TFDTransaction.Create(nil);
 end;
 
 destructor TFrmCadPedido.Destroy;
@@ -153,7 +152,6 @@ begin
   TblClientes.Free;
   DsProdutos.Free;
   DsClientes.Free;
-  TransacaoPedidos.Free;
   inherited Destroy;
 end;
 

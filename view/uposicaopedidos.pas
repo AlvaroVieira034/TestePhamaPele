@@ -63,31 +63,13 @@ constructor TFrmPosicaoPedido.Create(AOwner: TComponent);
 begin
   inherited;
   DsPedidos := TDataSource.Create(nil);
-  Transacao := TFDTransaction.Create(nil);
-end;
-
-procedure TFrmPosicaoPedido.DbGridPedidosDrawColumnCell(Sender: TObject; const [Ref] Rect: TRect; DataCol: Integer; Column: TColumn; State: TGridDrawState);
-begin
-  if Column.FieldName = 'STATUS' then
-  begin
-    if Column.Field.AsString = 'Pendente'  then
-      DbGridPedidos.Canvas.Font.Color := clRed;
-
-    if Column.Field.AsString = 'Em Andamento'  then
-      DbGridPedidos.Canvas.Font.Color := clYellow;
-
-    if Column.Field.AsString = 'Entregue'  then
-      DbGridPedidos.Canvas.Font.Color := clGreen;
-  end;
-
-  DbGridPedidos.DefaultDrawColumnCell(Rect, DataCol, Column, State);
 end;
 
 destructor TFrmPosicaoPedido.Destroy;
 begin
   DsPedidos.Free;
-  Transacao.Free;
-  inherited;
+
+  inherited Destroy;
 end;
 
 procedure TFrmPosicaoPedido.FormCreate(Sender: TObject);
@@ -95,8 +77,8 @@ begin
   if TConexao.GetInstance.Connection.TestarConexao then
   begin
     FPedidoController := TPedidoController.Create(TPedidoRepository.Create, TPedidoService.Create);
-    GetDataSource();
     Transacao := TConexao.GetInstance.Connection.CriarTransaction;
+    GetDataSource();
     FOperacao := opInicio;
   end
   else
@@ -140,6 +122,23 @@ end;
 procedure TFrmPosicaoPedido.VerificaBotoes(AOperacao: TOperacao);
 begin
 //-
+end;
+
+procedure TFrmPosicaoPedido.DbGridPedidosDrawColumnCell(Sender: TObject; const [Ref] Rect: TRect; DataCol: Integer; Column: TColumn; State: TGridDrawState);
+begin
+  if Column.FieldName = 'STATUS' then
+  begin
+    if Column.Field.AsString = 'Pendente'  then
+      DbGridPedidos.Canvas.Font.Color := clRed;
+
+    if Column.Field.AsString = 'Em Andamento'  then
+      DbGridPedidos.Canvas.Font.Color := clYellow;
+
+    if Column.Field.AsString = 'Entregue'  then
+      DbGridPedidos.Canvas.Font.Color := clGreen;
+  end;
+
+  DbGridPedidos.DefaultDrawColumnCell(Rect, DataCol, Column, State);
 end;
 
 procedure TFrmPosicaoPedido.BtnSairClick(Sender: TObject);

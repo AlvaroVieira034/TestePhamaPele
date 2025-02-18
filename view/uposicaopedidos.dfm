@@ -26,8 +26,6 @@ object FrmPosicaoPedido: TFrmPosicaoPedido
     Height = 65
     Align = alBottom
     TabOrder = 0
-    ExplicitLeft = -150
-    ExplicitTop = 0
     object BtnGravar: TSpeedButton
       Left = 325
       Top = 10
@@ -358,8 +356,6 @@ object FrmPosicaoPedido: TFrmPosicaoPedido
     Height = 510
     Align = alClient
     TabOrder = 1
-    ExplicitLeft = -150
-    ExplicitTop = -25
     DesignSize = (
       1195
       510)
@@ -371,7 +367,6 @@ object FrmPosicaoPedido: TFrmPosicaoPedido
       Anchors = [akLeft, akTop, akRight]
       Caption = ' Pedidos Cadastrados '
       TabOrder = 0
-      ExplicitWidth = 1172
       DesignSize = (
         1182
         487)

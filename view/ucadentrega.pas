@@ -99,7 +99,7 @@ begin
   DsPedidos := TDataSource.Create(nil);
   TblEntregadores := TFDQuery.Create(nil);
   DsEntregadores := TDataSource.Create(nil);
-  Transacao := TFDTransaction.Create(nil);
+  //Transacao := TFDTransaction.Create(nil);
 end;
 
 destructor TFrmCadEntrega.Destroy;
@@ -107,7 +107,7 @@ begin
   DsPedidos.Free;
   TblEntregadores.Free;
   DsEntregadores.Free;
-  Transacao.Free;
+  //Transacao.Free;
 
   inherited Destroy;
 end;
