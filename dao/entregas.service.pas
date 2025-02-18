@@ -95,9 +95,6 @@ begin
   DsPedidos := TConexao.GetInstance.Connection.CriarDataSource;
   DsEntregas.DataSet := TblEntregas;
   DsPedidos.DataSet := TblPedidos;
-
-  // Configurar o TblPedidos para mapear os campos automaticamente
-  TblPedidos.FieldOptions.AutoCreateMode := acCombineComputed; // ou acCombineAlways
 end;
 
 function TEntregasService.GetDataSourcePedidos: TDataSource;

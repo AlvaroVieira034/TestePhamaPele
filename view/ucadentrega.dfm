@@ -891,7 +891,7 @@ object FrmCadEntrega: TFrmCadEntrega
       end
       object BtnAddItemGrid: TButton
         Left = 1146
-        Top = 49
+        Top = 47
         Width = 25
         Height = 24
         Anchors = [akTop, akRight]
@@ -1076,6 +1076,9 @@ object FrmCadEntrega: TFrmCadEntrega
     end
     object MTblEntregasPRIORIDADE: TIntegerField
       FieldName = 'PRIORIDADE'
+    end
+    object MTblEntregasID_ENTREGADOR: TIntegerField
+      FieldName = 'ID_ENTREGADOR'
     end
   end
   object DsEntregas: TDataSource

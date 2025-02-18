@@ -3,7 +3,7 @@ unit pedido.controller;
 interface
 
 uses umain, Pedido.model, Pedido.service, iPedido.service, Pedido.repository, iPedido.repository,
-     system.SysUtils, Vcl.Forms, FireDAC.Comp.Client;
+     system.SysUtils, Vcl.Forms, FireDAC.Comp.Client, Data.DB;
 
 type
   TPedidoController = class
@@ -24,6 +24,8 @@ type
     procedure AtulizarStatusEntrega(AStatus, APedido: Integer; var sErro: string);
     function ExecutarTransacao(AOperacao: TProc; var sErro: string): Boolean;
     function RetornaPrioridadeProduto(ACodigo: Integer): Integer;
+    procedure ExibirSituacaoPedidos;
+    function GetDataSource: TDataSource;
 
   end;
 
@@ -111,6 +113,16 @@ end;
 function TPedidoController.RetornaPrioridadeProduto(ACodigo: Integer): Integer;
 begin
   Result := FPedidoService.RetornaPrioridadeProduto(ACodigo);
+end;
+
+procedure TPedidoController.ExibirSituacaoPedidos;
+begin
+  FPedidoService.ExibirSituacaoPedidos;
+end;
+
+function TPedidoController.GetDataSource: TDataSource;
+begin
+  Result := FPedidoService.GetDataSource;
 end;
 
 end.

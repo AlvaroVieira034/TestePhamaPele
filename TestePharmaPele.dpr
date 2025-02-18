@@ -46,7 +46,8 @@ uses
   entregas.controller in 'controller\entregas.controller.pas',
   ientregas.repository in 'interface\ientregas.repository.pas',
   ientregas.service in 'interface\ientregas.service.pas',
-  ucadentrega in 'view\ucadentrega.pas' {FrmCadEntrega};
+  ucadentrega in 'view\ucadentrega.pas' {FrmCadEntrega},
+  uposicaopedidos in 'view\uposicaopedidos.pas' {FrmPosicaoPedido};
 
 {$R *.res}
 

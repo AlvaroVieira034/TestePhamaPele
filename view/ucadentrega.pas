@@ -46,6 +46,7 @@ type
     MTblEntregasOBSERVACOES: TStringField;
     MTblEntregasPRIORIDADE: TIntegerField;
     DsEntregas: TDataSource;
+    MTblEntregasID_ENTREGADOR: TIntegerField;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure BtnInserirClick(Sender: TObject);
@@ -103,10 +104,6 @@ end;
 
 destructor TFrmCadEntrega.Destroy;
 begin
-  FEntregas.Free;
-  FPedidoController.Free;
-  FEntregasController.Free;
-  FEntregadorController.Free;
   DsPedidos.Free;
   TblEntregadores.Free;
   DsEntregadores.Free;
@@ -206,6 +203,7 @@ begin
       MTblEntregas.FieldByName('REQUER_PRESCRICAO').AsString := DsPedidos.DataSet.FieldByName('REQUER_PRESCRICAO').AsString;
       MTblEntregas.FieldByName('OBSERVACOES').AsString := DsPedidos.DataSet.FieldByName('OBSERVACOES').AsString;
       MTblEntregas.FieldByName('PRIORIDADE').AsInteger := DsPedidos.DataSet.FieldByName('PRIORIDADE').AsInteger;
+      MTblEntregas.FieldByName('ID_ENTREGADOR').AsInteger := LCbxNomeEntregador.KeyValue;
       MTblEntregas.Post;
       AtualizarBotaoDelItem();
     end
@@ -225,40 +223,45 @@ begin
     Exit;
   end;
 
-  with FEntregas do
+  MTblEntregas.First;
+
+  while not MTblEntregas.eof  do
   begin
-    Id_Pedido := MTblEntregasID_PEDIDO.AsInteger;
-    Id_Cliente := MTblEntregasID_CLIENTE.AsInteger;
-    Id_Entregador := LCbxNomeEntregador.KeyValue;
-    Data_Pedido := MTblEntregasDATA_PEDIDO.AsDateTime;
-    Valor_Pedido := MTblEntregasVALOR_PEDIDO.AsFloat;
-    Observacoes := MTblEntregasOBSERVACOES.AsString;
-    Prioridade := MTblEntregasPRIORIDADE.AsInteger;
-  end;
-
-  if not Transacao.Connection.Connected then
-    Transacao.Connection.Open();
-
-  Transacao.StartTransaction;
-  try
-    FEntregasController.Inserir(FEntregas, Transacao, sErro);
-    Transacao.Commit;
-    FPedidoController.AtulizarStatusEntrega(1, MTblEntregasID_PEDIDO.AsInteger, sErro);
-    MessageDlg('Entrega inserida com sucesso!', mtInformation, [mbOK],0);
-    PreencherGridPedidosPendentes();
-    if MTblEntregas.Active then
-      MTblEntregas.Close;
-
-    Result := True;
-  except
-    on E: Exception do
+    with FEntregas do
     begin
-      Transacao.Rollback;
-      MTblEntregas.Close;
-      VerificaBotoes(FOperacao);
-      raise Exception.Create(sErro + #13 + E.Message);
+      Id_Pedido := MTblEntregasID_PEDIDO.AsInteger;
+      Id_Cliente := MTblEntregasID_CLIENTE.AsInteger;
+      Id_Entregador := MTblEntregasID_ENTREGADOR.AsInteger;
+      Data_Pedido := MTblEntregasDATA_PEDIDO.AsDateTime;
+      Valor_Pedido := MTblEntregasVALOR_PEDIDO.AsFloat;
+      Observacoes := MTblEntregasOBSERVACOES.AsString;
+      Prioridade := MTblEntregasPRIORIDADE.AsInteger;
     end;
+
+    if not Transacao.Connection.Connected then
+      Transacao.Connection.Open();
+
+    Transacao.StartTransaction;
+    try
+      FEntregasController.Inserir(FEntregas, Transacao, sErro);
+      Transacao.Commit;
+      FPedidoController.AtulizarStatusEntrega(1, MTblEntregasID_PEDIDO.AsInteger, sErro);
+      MessageDlg('Entrega inserida com sucesso!', mtInformation, [mbOK],0);
+    except
+      on E: Exception do
+      begin
+        Transacao.Rollback;
+        MTblEntregas.Close;
+        VerificaBotoes(FOperacao);
+        raise Exception.Create(sErro + #13 + E.Message);
+      end;
+    end;
+    MTblEntregas.Next;
   end;
+  PreencherGridPedidosPendentes();
+  if MTblEntregas.Active then
+    MTblEntregas.Close;
+  Result := True;
 end;
 
 procedure TFrmCadEntrega.VerificaBotoes(AOperacao: TOperacao);

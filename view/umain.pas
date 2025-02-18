@@ -25,6 +25,7 @@ type
     procedure BtnSairClick(Sender: TObject);
     procedure BtnEntregadoresClick(Sender: TObject);
     procedure BtnCriarEntregasClick(Sender: TObject);
+    procedure BtnVerEntregasClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -38,7 +39,7 @@ implementation
 
 {$R *.dfm}
 
-uses ucadcliente, ucadproduto, ucadentregador, ucadpedido, ucadentrega;
+uses ucadcliente, ucadproduto, ucadentregador, ucadpedido, ucadentrega, uposicaopedidos;
 
 procedure TFrmMain.BtnClientesClick(Sender: TObject);
 begin
@@ -90,9 +91,20 @@ begin
   FrmCadEntrega := nil;
 end;
 
+procedure TFrmMain.BtnVerEntregasClick(Sender: TObject);
+begin
+  if not Assigned(FrmPosicaoPedido) then
+    FrmPosicaoPedido := TFrmPosicaoPedido.Create(Self);
+
+  FrmPosicaoPedido.ShowModal;
+  FrmPosicaoPedido.Free;
+  FrmPosicaoPedido := nil;
+end;
+
 procedure TFrmMain.BtnSairClick(Sender: TObject);
 begin
   Close;
 end;
+
 
 end.

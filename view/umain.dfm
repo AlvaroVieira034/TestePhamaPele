@@ -24,7 +24,7 @@ object FrmMain: TFrmMain
     ParentBackground = False
     TabOrder = 0
     object BtnSair: TSpeedButton
-      Left = 556
+      Left = 573
       Top = 10
       Width = 80
       Height = 55
@@ -133,11 +133,11 @@ object FrmMain: TFrmMain
       OnClick = BtnSairClick
     end
     object BtnPedidos: TSpeedButton
-      Left = 268
+      Left = 275
       Top = 10
       Width = 80
       Height = 55
-      Caption = 'Pedidos'
+      Caption = 'Incluir Pedidos'
       Flat = True
       Glyph.Data = {
         36100000424D3610000000000000360000002800000020000000200000000100
@@ -524,7 +524,7 @@ object FrmMain: TFrmMain
       OnClick = BtnClientesClick
     end
     object BtnCriarEntregas: TSpeedButton
-      Left = 361
+      Left = 369
       Top = 10
       Width = 80
       Height = 55
@@ -633,11 +633,11 @@ object FrmMain: TFrmMain
       OnClick = BtnCriarEntregasClick
     end
     object BtnVerEntregas: TSpeedButton
-      Left = 466
+      Left = 468
       Top = 10
-      Width = 80
+      Width = 103
       Height = 55
-      Caption = 'Ver Entregas'
+      Caption = 'Acompanhar Pedidos'
       Flat = True
       Glyph.Data = {
         360C0000424D360C000000000000360000002800000020000000200000000100
@@ -739,7 +739,7 @@ object FrmMain: TFrmMain
         0BB57C0BB57C0BB57C0BB67E0FCBA85EF7F7F7CBA85EB78217B68114B68114B6
         8114B78217D6BB84FBFBFBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
       Layout = blGlyphTop
-      OnClick = BtnPedidosClick
+      OnClick = BtnVerEntregasClick
     end
     object BtnEntregadores: TSpeedButton
       Left = 179
@@ -856,7 +856,7 @@ object FrmMain: TFrmMain
     Left = 685
     Top = 212
     Bitmap = {
-      494C01010F001100180010001000FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
+      494C01010F0011001C0010001000FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000230000003300000033000000330000003300000033000000330000
