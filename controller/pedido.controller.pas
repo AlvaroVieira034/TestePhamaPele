@@ -22,6 +22,7 @@ type
     function Alterar(FPedido: TPedido; ACodigo: Integer; sErro: string): Boolean;
     function Excluir(ACodigo: Integer; var sErro: string): Boolean;
     procedure AtulizarStatusEntrega(AStatus, APedido: Integer; var sErro: string);
+    function ConcluirEntregaPedido(ADataEntrega: TDate; APedido: Integer; out sErro: string): Boolean;
     function ExecutarTransacao(AOperacao: TProc; var sErro: string): Boolean;
     function RetornaPrioridadeProduto(ACodigo: Integer): Integer;
     procedure ExibirSituacaoPedidos;
@@ -103,6 +104,11 @@ end;
 procedure TPedidoController.AtulizarStatusEntrega(AStatus, APedido: Integer; var sErro: string);
 begin
   FPedidoRepository.AtulizarStatusEntrega(AStatus, APedido, sErro);
+end;
+
+function TPedidoController.ConcluirEntregaPedido(ADataEntrega: TDate; APedido: Integer; out sErro: string): Boolean;
+begin
+  Result := FPedidoRepository.ConcluirEntregaPedido(ADataEntrega, APedido, sErro)
 end;
 
 function TPedidoController.ExecutarTransacao(AOperacao: TProc;  var sErro: string): Boolean;

@@ -10,6 +10,7 @@ type
 
   private
     QryPedidos: TFDQuery;
+    QryTemp: TFDQuery;
     Transacao: TFDTransaction;
 
   public
@@ -19,14 +20,17 @@ type
     function Alterar(FPedido: TPedido; ACodigo: Integer; out sErro: string): Boolean;
     function Excluir(ACodigo: Integer; out sErro: string): Boolean;
     procedure AtulizarStatusEntrega(AStatus, APedido: Integer; out sErro: string);
+    function ConcluirEntregaPedido(ADataEntrega: TDate; APedido: Integer; out sErro: string): Boolean;
     function ExecutarTransacao(AOperacao: TProc; var sErro: string): Boolean;
     procedure CriarTabelas;
 
   end;
 
+
 implementation
 
 { TPedidoRepository }
+
 
 constructor TPedidoRepository.Create;
 begin
@@ -36,6 +40,7 @@ end;
 destructor TPedidoRepository.Destroy;
 begin
   QryPedidos.Free;
+  QryTemp.Free;
   inherited;
 
 end;
@@ -95,7 +100,7 @@ begin
     SQL.Add('id_cliente = :id_cliente, ');
     SQL.Add('data_pedido = :data_pedido, ');
     SQL.Add('valor_pedido = :valor_pedido,');
-    SQL.Add('status_entrega = :status_entrega');
+    SQL.Add('status_entrega = :status_entrega,');
     SQL.Add('prioridade = :prioridade');
     SQL.Add('where id_pedido = :id_pedido');
 
@@ -163,6 +168,54 @@ begin
   end;
 end;
 
+function TPedidoRepository.ConcluirEntregaPedido(ADataEntrega: TDate;  APedido: Integer; out sErro: string): Boolean;
+const STATUS_ENTREGA_PEDIDO = 2;
+begin
+  Result := False;
+  with QryPedidos do
+  begin
+    Close;
+    SQL.Clear;
+    SQL.Text := 'update pedido set status_entrega = :status where id_pedido = :id_pedido';
+    ParamByName('STATUS').AsInteger := STATUS_ENTREGA_PEDIDO;
+    ParamByName('ID_PEDIDO').AsInteger := APedido;
+
+    try
+      ExecSQL;
+      Result := True;
+    except
+      on E: Exception do
+      begin
+      sErro := 'Ocorreu um erro ao concluir a entrega do pedido!' + sLineBreak + E.Message;
+      raise;
+      end;
+    end;
+
+  end;
+
+  with QryTemp do
+  begin
+    Close;
+    SQL.Clear;
+    SQL.Text := 'update entrega set data_entrega = :data_entrega where id_pedido = :id_pedido';
+
+    ParamByName('DATA_ENTREGA').AsDateTime := ADataEntrega;
+    ParamByName('ID_PEDIDO').AsInteger := APedido;
+
+    try
+      ExecSQL;
+      Result := True;
+    except
+      on E: Exception do
+      begin
+      sErro := 'Ocorreu um erro ao concluir a entrega do pedido!' + sLineBreak + E.Message;
+      raise;
+      end;
+    end;
+
+  end;
+end;
+
 function TPedidoRepository.ExecutarTransacao(AOperacao: TProc; var sErro: string): Boolean;
 begin
   Result := False;
@@ -196,6 +249,7 @@ procedure TPedidoRepository.CriarTabelas;
 begin
   Transacao := TConexao.GetInstance.Connection.CriarTransaction;
   QryPedidos := TConexao.GetInstance.Connection.CriarQuery;
+  QryTemp := TConexao.GetInstance.Connection.CriarQuery;
 end;
 
 

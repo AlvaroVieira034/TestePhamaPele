@@ -251,6 +251,7 @@ begin
     EdtCodCliente.Text := IntToStr(Id_Cliente);
     EdtDataPedido.Text := DateToStr(Data_Pedido);
     EdtTotalPedido.Text := FormatFloat('######0.00', Valor_Pedido);
+
   end;
 
   // Carregar os itens do Pedido usando a controller

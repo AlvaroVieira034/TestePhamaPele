@@ -25,12 +25,17 @@ type
     PnlDados: TPanel;
     GrbDados: TGroupBox;
     DbGridPedidos: TDBGrid;
+    LblDataEntrega: TLabel;
+    EdtDataEntrega: TEdit;
+    BtnConcluir: TSpeedButton;
     procedure BtnSairClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure DbGridPedidosDrawColumnCell(Sender: TObject;
-      const [Ref] Rect: TRect; DataCol: Integer; Column: TColumn;
-      State: TGridDrawState);
+    procedure DbGridPedidosDrawColumnCell(Sender: TObject; const [Ref] Rect: TRect; DataCol: Integer; Column: TColumn; State: TGridDrawState);
+    procedure BtnGravarClick(Sender: TObject);
+    procedure BtnConcluirClick(Sender: TObject);
+    procedure EdtDataEntregaKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure EdtDataEntregaChange(Sender: TObject);
   private
     FEntregas: TEntrega;
     FPedidoController: TPedidoController;
@@ -54,6 +59,7 @@ type
 
 var
   FrmPosicaoPedido: TFrmPosicaoPedido;
+  sErro: string;
 
 implementation
 
@@ -116,7 +122,17 @@ end;
 
 function TFrmPosicaoPedido.GravarDados: Boolean;
 begin
-//-
+  Result := False;
+  if EdtDataEntrega.Text = EmptyStr then
+  begin
+    MessageDlg('A data de entrega do pedido deve ser preenchida!', mtWarning, [mbOK], 0);
+    begin
+      EdtDataEntrega.SetFocus;
+      Exit;
+    end;
+  end;
+
+  Result := FPedidoController.ConcluirEntregaPedido(StrToDate(EdtDataEntrega.Text), DbGridPedidos.DataSource.DataSet.FieldByName('ID_PEDIDO').AsInteger, sErro);
 end;
 
 procedure TFrmPosicaoPedido.VerificaBotoes(AOperacao: TOperacao);
@@ -139,6 +155,78 @@ begin
   end;
 
   DbGridPedidos.DefaultDrawColumnCell(Rect, DataCol, Column, State);
+end;
+
+procedure TFrmPosicaoPedido.BtnConcluirClick(Sender: TObject);
+var status_pedido: Integer;
+begin
+  status_pedido := DbGridPedidos.DataSource.DataSet.FieldByName('STATUS_ENTREGA').AsInteger;
+  if status_pedido <> 1 then
+  begin
+    case status_pedido of
+      0: MessageDlg('Pedido com stutus ''Pendente'' - Não pode ser concluído!', mtError, [mbOK], 0);
+      2: MessageDlg('Pedido já entegue!', mtError, [mbOK], 0)
+    end;
+    Exit;
+  end;
+
+  BtnConcluir.SendToBack;
+  BtnSair.SendToBack;
+  BtnConcluir.Visible := False;
+  BtnSair.Visible := False;
+
+  LblDataEntrega.BringToFront;
+  LblDataEntrega.Visible := True;
+  EdtDataEntrega.BringToFront;
+  EdtDataEntrega.Visible := True;
+  BtnGravar.BringToFront;
+  BtnGravar.Visible := True;
+
+  EdtDataEntrega.SetFocus;
+end;
+
+procedure TFrmPosicaoPedido.EdtDataEntregaKeyDown(Sender: TObject;  var Key: Word; Shift: TShiftState);
+begin
+  if Key = VK_ESCAPE then
+  begin
+    BtnConcluir.BringToFront;
+    BtnSair.BringToFront;
+    BtnConcluir.Visible := True;
+    BtnSair.Visible := True;
+
+    LblDataEntrega.SendToBack;
+    LblDataEntrega.Visible := False;
+    EdtDataEntrega.SendToBack;
+    EdtDataEntrega.Visible := False;
+    BtnGravar.SendToBack;
+    BtnGravar.Visible := False;
+    Key := 0;
+  end;
+end;
+
+procedure TFrmPosicaoPedido.BtnGravarClick(Sender: TObject);
+begin
+  if GravarDados() then
+  begin
+   BtnConcluir.BringToFront;
+   BtnSair.BringToFront;
+   BtnConcluir.Visible := True;
+   BtnSair.Visible := True;
+
+   LblDataEntrega.SendToBack;
+   LblDataEntrega.Visible := False;
+   EdtDataEntrega.SendToBack;
+   EdtDataEntrega.Visible := False;
+   BtnGravar.SendToBack;
+   BtnGravar.Visible := False;
+
+   PreencherGridPedidos();
+  end;
+end;
+
+procedure TFrmPosicaoPedido.EdtDataEntregaChange(Sender: TObject);
+begin
+  Formatar(EdtDataEntrega, TFormato.Dt);
 end;
 
 procedure TFrmPosicaoPedido.BtnSairClick(Sender: TObject);

@@ -95,7 +95,7 @@ end;
 
 procedure TPedidoService.PreencherCamposForm(FPedido: TPedido; ACodigo: Integer);
 begin
-  with TblPedidos do
+  with QryTemp do
   begin
     Close;
     SQL.Clear;
@@ -111,7 +111,7 @@ begin
     ParamByName('ID_PEDIDO').AsInteger := ACodigo;
     Open();
 
-    with FPedido, TblPedidos do
+    with FPedido, QryTemp do
     begin
       Id_Pedido := FieldByName('ID_PEDIDO').AsInteger;
       Id_Cliente := FieldByName('ID_CLIENTE').AsInteger;
@@ -218,6 +218,12 @@ begin
   SingleField.DataSet := TblPedidos;
   SingleField.Name := 'TblPedidosVALOR_PEDIDO';
   SingleField.DisplayFormat := '#,###,##0.00';
+
+  // Criando o campo STATUS_ENTREGA
+  IntegerField:= TIntegerField.Create(TblPedidos);
+  IntegerField.FieldName := 'STATUS_ENTREGA';
+  IntegerField.DataSet := TblPedidos;
+  IntegerField.Name := 'TblPedidoSTATUS_ENTREGA';
 
   // Criando o campo STATUS
   StringField := TStringField.Create(TblPedidos);

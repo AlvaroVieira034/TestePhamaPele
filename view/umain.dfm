@@ -24,7 +24,7 @@ object FrmMain: TFrmMain
     ParentBackground = False
     TabOrder = 0
     object BtnSair: TSpeedButton
-      Left = 573
+      Left = 554
       Top = 10
       Width = 80
       Height = 55
@@ -133,11 +133,11 @@ object FrmMain: TFrmMain
       OnClick = BtnSairClick
     end
     object BtnPedidos: TSpeedButton
-      Left = 275
+      Left = 264
       Top = 10
       Width = 80
       Height = 55
-      Caption = 'Incluir Pedidos'
+      Caption = 'Pedidos'
       Flat = True
       Glyph.Data = {
         36100000424D3610000000000000360000002800000020000000200000000100
@@ -524,7 +524,7 @@ object FrmMain: TFrmMain
       OnClick = BtnClientesClick
     end
     object BtnCriarEntregas: TSpeedButton
-      Left = 369
+      Left = 350
       Top = 10
       Width = 80
       Height = 55
@@ -633,7 +633,7 @@ object FrmMain: TFrmMain
       OnClick = BtnCriarEntregasClick
     end
     object BtnVerEntregas: TSpeedButton
-      Left = 468
+      Left = 449
       Top = 10
       Width = 103
       Height = 55
@@ -856,7 +856,7 @@ object FrmMain: TFrmMain
     Left = 685
     Top = 212
     Bitmap = {
-      494C01010F0011001C0010001000FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
+      494C01010F001100200010001000FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000230000003300000033000000330000003300000033000000330000
